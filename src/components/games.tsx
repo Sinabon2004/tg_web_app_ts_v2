@@ -30,7 +30,7 @@ function Games() {
         return <div className={"h-[100dvh] w-full flex justify-center flex-col items-center bg-gray-800"}>
             <h2 className="text-xl text-purple-200 font-bold">Идет загрузка игры</h2>
             <Image className={"w-[30%] ml-8"} src={"/animated/loading.svg"} width={100} height={100}   alt={"loading"}/>
-        </div>; // Show a loading message while fetching data
+        </div>; // Show a loading message while fetching data ф
     }
 
 
