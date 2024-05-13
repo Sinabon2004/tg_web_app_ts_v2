@@ -46,8 +46,10 @@ export default function User(props: { user?: User }) {
 
     return (
         <div className=" h-[80px]  mx-auto px-6 py-5 flex justify-between items-center">
-
-
+            <div >
+                <img src="/next.svg" className="w-[100px]" alt=""/>
+            </div>
+            <div className="flex gap-4 p-0 justify-center items-center">
                 <button
                     onClick={handleWalletClick}
                     className="relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white  focus:outline-none">
@@ -66,22 +68,23 @@ export default function User(props: { user?: User }) {
                 </button>
 
 
-            <Wallet isOpen={isWalletOpen} onClose={() => setIsWalletOpen(false)} money={money} />
+                <Wallet isOpen={isWalletOpen} onClose={() => setIsWalletOpen(false)} money={money}/>
 
-            <button
-                onClick={handleProfileClick}
-                className="h-10 bg-gradient-to-br  from-purple-600 to-blue-500 text-white px-3 rounded-2xl
+                <button
+                    onClick={handleProfileClick}
+                    className="h-10 bg-gradient-to-br  from-purple-600 to-blue-500 text-white px-3 rounded-2xl
                                    hover:bg-blue-800 transition-colors
                                    flex items-center justify-between
                                     shadow-md hover:shadow-lg gap-3 py-6 ">
-                <div className='flex items-center py-2 justify-between gap-2'>
-                    <div className="flex items-center ">
-                        <Avatar user={user} className={"h-10 w-10 rounded-full"}/>
+                    <div className='flex items-center py-2 justify-between gap-2'>
+                        <div className="flex items-center ">
+                            <Avatar user={user} className={"h-10 w-10 rounded-full"}/>
+                        </div>
+                        <h5 className="text-xs sm:text-sm font-bold">{user?.username}</h5>
                     </div>
-                    <h5 className="text-xs sm:text-sm font-bold">{user?.username}</h5>
-                </div>
-            </button>
-            <Profile isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} user={user}/>
+                </button>
+                <Profile isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} user={user}/>
+            </div>
         </div>
     );
 }

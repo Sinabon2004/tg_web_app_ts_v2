@@ -27,8 +27,8 @@ const Wallet: React.FC<WalletProps> = ({ isOpen, onClose, money   }) => {
 
 
     return (
-        <div className={clsx(OpenClassWrapper, "mt-[80px] transition duration-150  fixed inset-0 z-40 overflow-auto bg-gray-900 bg-opacity-75 flex justify-center items-center")} >
-            <div className={clsx(OpenClassContent,"relative transition delay-150 duration-300 max-w-[500px] bg-gray-700 p-6 w-full rounded-lg shadow-xl")}>
+        <div onClick={ () => { onClose() }} className={clsx(OpenClassWrapper, "mt-[80px]   duration-150  fixed inset-0 z-40  bg-gray-900 bg-opacity-75 flex justify-center items-center overflow-hidden")} >
+            <div onClick={ e => e.stopPropagation() } className={clsx(OpenClassContent,"relative transition-all  duration-400 max-w-[500px] bg-gray-700 p-6 w-full rounded-lg shadow-xl")}>
 
                 <div className="flex mt-4 flex-col items-center justify-center w-full gap-3">
 
