@@ -20,9 +20,10 @@ const Profile: React.FC<ProfileProps> = ({ isOpen, onClose, user }) => {
 
     let OpenClassWrapper = isOpen?"top-0":"top-[100%]";
     let OpenClassContent = isOpen?"top-0":"top-[-100%]";
+
     return (
-        <div className={clsx(OpenClassWrapper, "mt-[80px] transition duration-150  fixed inset-0 z-40 overflow-auto bg-gray-900 bg-opacity-75 flex justify-center items-center")} >
-            <div className={clsx(OpenClassContent,"relative transition delay-150 duration-300 max-w-[500px] bg-gray-700 p-6 w-full rounded-lg shadow-xl")}>
+        <div onClick={ () => { onClose() }} className={clsx(OpenClassWrapper, "mt-[80px]  duration-150  fixed inset-0 z-40 bg-gray-900 bg-opacity-75 flex justify-center items-center overflow-hidden")} >
+            <div onClick={ e => e.stopPropagation() } className={clsx(OpenClassContent,"relative transition-all  duration-400 max-w-[500px] bg-gray-700 p-6 w-full rounded-lg shadow-xl")}>
 
                 <div className="w-full bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex items-center flex-col">
                     <div className="w-full rounded-t-lg h-32 overflow-hidden">
