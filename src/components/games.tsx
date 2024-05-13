@@ -5,7 +5,7 @@ import useGamesData from "@/hooks/useGamesData";
 import {useInView} from "react-intersection-observer";
 import {id} from "postcss-selector-parser";
 
-interface Games {
+type games = {
     id: number,
     title: string,
     description: string,

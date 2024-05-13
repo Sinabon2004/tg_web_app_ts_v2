@@ -7,19 +7,24 @@ import Profile from "@/components/profile";
 import useUserData from "@/hooks/useUserData";
 import moneyFormat from "@/utils/moneyFormat";
 
-interface User {
-    id: number;
-    username: string;
-    lastName: string;
-    firstName: string;
-    photo_url?: string;
-    money?: number
 
+type userData = {
+    id?: number;
+    username?: string;
+    lastName?: string;
+    firstName?: string;
+    photo_url?: string;
+    money?: number | undefined;
+}
+interface UserProps {
+    user: userData
     // Add other properties as needed (e.g., email, id)
 }
-export default function User(props: { user?: User }) {
+export default function User(props: {user: userData}) {
 
-    const user =props.user;
+    console.log(props)
+    const user = props.user
+
 
     const money = moneyFormat(user?.money)
 
@@ -47,7 +52,7 @@ export default function User(props: { user?: User }) {
     return (
         <div className=" h-[80px]  mx-auto px-6 py-5 flex justify-between items-center">
             <div >
-                <img src="/next.svg" className="w-[100px]" alt=""/>
+                <img src="/lego.png" className="w-[40px]" alt=""/>
             </div>
             <div className="flex gap-4 p-0 justify-center items-center">
                 <button
@@ -61,14 +66,14 @@ export default function User(props: { user?: User }) {
                                   d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/>
                         </svg>
 
-                        <h5 className="leading-none">{money}</h5>
+                        <h5 className="leading-none hidden min-[360px]:block">{money}</h5>
 
                     </div>
 
                 </button>
 
 
-                <Wallet isOpen={isWalletOpen} onClose={() => setIsWalletOpen(false)} money={money}/>
+                <Wallet isOpen={isWalletOpen} onClose={() => setIsWalletOpen(false)} user={user}/>
 
                 <button
                     onClick={handleProfileClick}
@@ -80,7 +85,7 @@ export default function User(props: { user?: User }) {
                         <div className="flex items-center ">
                             <Avatar user={user} className={"h-10 w-10 rounded-full"}/>
                         </div>
-                        <h5 className="text-xs sm:text-sm font-bold">{user?.username}</h5>
+                        <h5 className="text-xs sm:text-sm font-bold hidden xs:block">{user?.username}</h5>
                     </div>
                 </button>
                 <Profile isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} user={user}/>

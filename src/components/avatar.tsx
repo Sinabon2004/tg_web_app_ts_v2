@@ -2,16 +2,18 @@ import React from "react";
 import Image from "next/image";
 
 // Interface for User object
-interface User {
-    username: string;
-    photo_url?: string; // Optional property
-    first_name?: string; // You can add other optional properties if needed
-    last_name?: string;
+type userData = {
+    id?: number;
+    username?: string;
+    lastName?: string;
+    firstName?: string;
+    photo_url?: string;
+    money?: number | undefined;
 }
 
 // Interface for Avatar component props
 interface AvatarProps {
-    user: User;
+    user: userData;
     className?: string; // Optional property
 }
 
@@ -29,7 +31,7 @@ export default function Avatar({ user, className }: AvatarProps) {
             // Specify width and height if desired (recommended for performance)
             width={100}
             height={100}
-            alt={user?.username}
+            alt={"username"}
             className={className}
         />
     );

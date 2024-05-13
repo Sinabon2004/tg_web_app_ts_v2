@@ -9,7 +9,7 @@ import useUserData from "@/hooks/useUserData";
 
 type userData = {
     id: number;
-    username: string;
+    username?: string;
     lastName: string;
     firstName: string;
     photo_url?: string;
@@ -24,6 +24,8 @@ export default function Header() {
         ...initData?.user,
         ...userData
     }
+
+
 
     return (
 

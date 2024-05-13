@@ -1,7 +1,13 @@
 import {useEffect, useState} from "react";
 
+type Game = {
+    id: number,
+    title: string,
+    description: string,
+    thumbnail_url: string,
+}
 const useGamesData = () => {
-    const [games, setGames] = useState([]);
+    const [games, setGames] = useState<Game[]>([]);
 
 
     useEffect(() => {

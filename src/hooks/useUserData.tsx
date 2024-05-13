@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from "react";
 
 
-const useUserData = (userId: number) => {
+const useUserData = (userId: number | undefined) => {
     const [userData, setUserData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 

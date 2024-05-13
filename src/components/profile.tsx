@@ -3,17 +3,19 @@ import React from "react";
 import Avatar from "@/components/avatar";
 
 
-interface User {
-    username: string;
-    photo_url?: string; // Optional property
-    firstName?: string; // You can add other optional properties if needed
+type userData = {
+    id?: number;
+    username?: string;
     lastName?: string;
+    firstName?: string;
+    photo_url?: string;
+    money?: number | undefined;
 }
 
 interface ProfileProps {
     isOpen: boolean;
     onClose: () => void; // Function type for onClose handler
-    user: User; // Optional user object
+    user: userData; // Optional user object
 }
 
 const Profile: React.FC<ProfileProps> = ({ isOpen, onClose, user }) => {

@@ -1,24 +1,27 @@
 import clsx from "clsx";
 import {useEffect, useMemo, useState} from "react";
 import useUserData from "@/hooks/useUserData";
+import UseUserData from "@/hooks/useUserData";
 
 
-interface User {
-    username: string;
-    photo_url?: string; // Optional property
-    first_name?: string; // You can add other optional properties if needed
-    last_name?: string;
+
+type userData = {
+    id?: number;
+    username?: string;
+    lastName?: string;
+    firstName?: string;
+    photo_url?: string;
+    money?: number | undefined;
 }
 
 interface WalletProps {
     isOpen: boolean;
     onClose: () => void;
-    money: string;
-    user: User;
+    user: userData;
 
 }
 
-const Wallet: React.FC<WalletProps> = ({ isOpen, onClose, money   }) => {
+const Wallet: React.FC<WalletProps> = ({ isOpen, onClose, user   }) => {
 
 
 
@@ -36,7 +39,7 @@ const Wallet: React.FC<WalletProps> = ({ isOpen, onClose, money   }) => {
                         className="bg-gray-800 rounded-lg border-[#6457E0] border-2 border-opacity-50 p-5 flex  gap-[10%] items-center justify-center w-full">
                         <div className="flex flex-col gap-2">
                             <h5 className="font-bold text-sm sm:text-lg">ваш баланс</h5>
-                            <h4 className="font-extrabold text-[#6457E0] text-lg sm:text-2xl">{money}</h4>
+                            <h4 className="font-extrabold text-[#6457E0] text-lg sm:text-2xl">{user?.money}</h4>
                             {/*<h5 className="font-bold text-sm sm:text-lg">20 TON</h5>*/}
                         </div>
                         <div className="w-[33%]">
