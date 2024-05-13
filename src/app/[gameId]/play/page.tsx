@@ -1,13 +1,11 @@
 "use client"
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 import {useEffect, useState} from "react";
-import {router} from "next/client";
-import {Router} from "next/router";
-import Link from "next/link";
 import useGameData from "@/hooks/useGameData";
 import {BackButton, init, postEvent} from "@tma.js/sdk";
 import {TickTackToeService} from "@/services/tick-tack-toe";
+
 
 export default function PlayGamePage(parent: any) {
     const gameId = parent.params.gameId;
@@ -16,6 +14,8 @@ export default function PlayGamePage(parent: any) {
     const user = initData?.user;
 
     const router = useRouter();
+    const searchParams = useSearchParams();
+
     const [isReady, setIsReady] = useState(false);
     const [gameService, setGameService] = useState<TickTackToeService | null>(null);
 
@@ -23,9 +23,9 @@ export default function PlayGamePage(parent: any) {
         // Генерация случайного идентификатора комнаты
         return Math.random().toString(36).substr(2, 9);
     };
-
-    const roomId = typeof (router?.query?.roomId) !== "string" ? generateRoomId() : router?.query?.roomId;
-
+    const roomId = typeof searchParams.get("roomId") === "undefined" || searchParams.get("roomId") === null
+        ? generateRoomId() : String(searchParams.get("roomId"));
+    console.log(roomId);
     useEffect(() => {
         const backButton = new BackButton(true, "6.3", postEvent);
         backButton.show();
@@ -41,8 +41,7 @@ export default function PlayGamePage(parent: any) {
         return () => {
             service.closeConnection();
         };
-    }, [gameId, router, user?.id]);
-
+    }, [roomId,gameId, router, user?.id]);
 
 
     const handleStartGame = () => {
@@ -50,7 +49,7 @@ export default function PlayGamePage(parent: any) {
     };
 
     const generateRoomLink = (roomId: string) => {
-        return `${window.location.origin}/play/${gameId}?roomId=${roomId}`;
+        return `t.me/gamees_pay_bot/play/roomId=${roomId}`;
     };
 
     if (!gameData) {
@@ -76,7 +75,7 @@ export default function PlayGamePage(parent: any) {
                         </div>
                         <span className="w-full h-[2px] rounded-full block bg-black"></span>
                         <div className="p-1">
-                            <h2 className="text-xl text-gray-900 font-bold ">{gameId}</h2>
+                            <h2 className="text-xl text-gray-900 font-bold ">{"Ожидание второго игрока"}</h2>
                         </div>
                         <span className="w-full h-[2px] rounded-full block bg-black"></span>
                     </div>
@@ -104,8 +103,8 @@ export default function PlayGamePage(parent: any) {
                         </>
                     ) : (
                         <>
-                            <Link
-                                href={generateRoomLink(roomId)}
+                            <button
+                                onClick={() => console.log(generateRoomLink(roomId))}
                                 className="group p-4 text-xl min-[350px]:text-2xl text-purple-100 font-semibold text-center bg-purple-600 rounded-lg hover:text-purple-600 hover:bg-purple-100 transition flex justify-between gap-8 items-center"
                             >
                                 <h3>Пригласить друга</h3>
@@ -119,9 +118,9 @@ export default function PlayGamePage(parent: any) {
                                     <path strokeLinecap="round" strokeLinejoin="round"
                                           d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
                                 </svg>
-                            </Link>
+                            </button>
                             <h3 className="text-xl text-purple-100 font-semibold text-center bg-purple-600 rounded-lg p-4">
-                                Ждем готовности всех игроков...
+                                Ждем всех игроков...
                             </h3>
                         </>
                     )}
