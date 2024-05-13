@@ -52,7 +52,8 @@ export default function GameDetailsPage(
                 <div className={"w-full flex "}>
                     <Link className={" p-4 text-2xl text-purple-100 font-bold" +
                         " bg-purple-600 rounded-lg hover:text-purple-600 hover:bg-purple-100" +
-                        " transition  "} href={`/${id}/play`}
+                        " transition" + (title!="Tick-Tack-Toe"?
+                        "cursor-not-allowed pointer-events-none opacity-50": "")} href={`/${id}/play`}
                     >Начать игру</Link>
                 </div>
             </div>

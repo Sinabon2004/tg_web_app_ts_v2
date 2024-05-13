@@ -6,7 +6,7 @@ const useUserData = (userId: number) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const url = useMemo(() => {
-        return userId ? `https://accepted-elephant-jolly.ngrok-free.app/user/${userId}` : null;
+        return userId ? `https://tg-mini-app.local/user/${userId}` : null;
     }, [userId]);
 
     useEffect(() => {
