@@ -1,10 +1,11 @@
 "use client"
-import {useRouter, useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams,  usePathname} from "next/navigation";
 
 import {useEffect, useState} from "react";
 import useGameData from "@/hooks/useGameData";
 import {BackButton, init, postEvent} from "@tma.js/sdk";
 import {TickTackToeService} from "@/services/tick-tack-toe";
+import Link from "next/link";
 
 
 export default function PlayGamePage(parent: any) {
@@ -15,6 +16,7 @@ export default function PlayGamePage(parent: any) {
 
     const router = useRouter();
     const searchParams = useSearchParams();
+    const routePath = usePathname();
 
     const [isReady, setIsReady] = useState(false);
     const [gameService, setGameService] = useState<TickTackToeService | null>(null);
@@ -23,9 +25,10 @@ export default function PlayGamePage(parent: any) {
         // Генерация случайного идентификатора комнаты
         return Math.random().toString(36).substr(2, 9);
     };
-    const roomId = typeof searchParams.get("roomId") === "undefined" || searchParams.get("roomId") === null
-        ? generateRoomId() : String(searchParams.get("roomId"));
-    console.log(roomId);
+    const roomId = String(searchParams.get("roomId"));
+    if (roomId === "null") {
+        router.push(`${routePath}?roomId=${generateRoomId()}`);
+    }
     useEffect(() => {
         const backButton = new BackButton(true, "6.3", postEvent);
         backButton.show();
@@ -49,7 +52,8 @@ export default function PlayGamePage(parent: any) {
     };
 
     const generateRoomLink = (roomId: string) => {
-        return `t.me/gamees_pay_bot/play/roomId=${roomId}`;
+
+        return `tg://msg_url?url=t.me/gamees_pay_bot/play/roomId=${roomId}`;
     };
 
     if (!gameData) {
@@ -103,8 +107,8 @@ export default function PlayGamePage(parent: any) {
                         </>
                     ) : (
                         <>
-                            <button
-                                onClick={() => console.log(generateRoomLink(roomId))}
+                            <Link
+                                href={generateRoomLink(roomId)}
                                 className="group p-4 text-xl min-[350px]:text-2xl text-purple-100 font-semibold text-center bg-purple-600 rounded-lg hover:text-purple-600 hover:bg-purple-100 transition flex justify-between gap-8 items-center"
                             >
                                 <h3>Пригласить друга</h3>
@@ -118,7 +122,7 @@ export default function PlayGamePage(parent: any) {
                                     <path strokeLinecap="round" strokeLinejoin="round"
                                           d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
                                 </svg>
-                            </button>
+                            </Link>
                             <h3 className="text-xl text-purple-100 font-semibold text-center bg-purple-600 rounded-lg p-4">
                                 Ждем всех игроков...
                             </h3>

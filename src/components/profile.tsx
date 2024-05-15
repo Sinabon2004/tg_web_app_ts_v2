@@ -8,7 +8,7 @@ type userData = {
     username?: string;
     lastName?: string;
     firstName?: string;
-    photo_url?: string;
+    avatar_url?: string | null | undefined;
     money?: number | undefined;
 }
 

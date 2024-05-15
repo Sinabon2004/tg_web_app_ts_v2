@@ -8,7 +8,7 @@ const useGameData = (gameId: number) => {
         const fetchGameData = async () => {
             if (gameId) {
                 try {
-                    const response = await fetch(`https://tg-mini-app.local/games/${gameId}`, {
+                    const response = await fetch(`https://accepted-elephant-jolly.ngrok-free.app/games/${gameId}`, {
                         method: 'GET',
                         headers: {
                             'ngrok-skip-browser-warning': '69420',

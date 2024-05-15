@@ -7,7 +7,7 @@ type userData = {
     username?: string;
     lastName?: string;
     firstName?: string;
-    photo_url?: string;
+    avatar_url?: string | null | undefined;
     money?: number | undefined;
 }
 
@@ -18,12 +18,13 @@ interface AvatarProps {
 }
 
 export default function Avatar({ user, className }: AvatarProps) {
-    let pic = user?.photo_url;
+    let pic = user?.avatar_url;
 
     // Set a default fallback image for undefined or null user.photo_url
     if (pic === undefined || pic === null) {
         pic = "/images/avatar.png"; // Assuming the image is directly in the public directory
     }
+
 
     return (
         <Image

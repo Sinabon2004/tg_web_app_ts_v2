@@ -11,7 +11,7 @@ const useGamesData = () => {
 
 
     useEffect(() => {
-        fetch('https://tg-mini-app.local/games', {
+        fetch('https://accepted-elephant-jolly.ngrok-free.app/games', {
             method: "get",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420",

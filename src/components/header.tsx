@@ -8,22 +8,23 @@ import useGameData from "@/hooks/useGameData";
 import useUserData from "@/hooks/useUserData";
 
 type userData = {
-    id: number;
-    username?: string;
-    lastName: string;
-    firstName: string;
-    photo_url?: string;
+    // id: number;
+    // username?: string;
+    // lastName: string;
+    // firstName: string;
+    avatar_url: string | null | undefined;
     money: number;
 }
 export default function Header() {
 
 
     const { initData} = init();
-    const userData = useUserData(initData?.user?.id);
+    const userData:userData | undefined = useUserData(initData?.user?.id);
     const user = {
         ...initData?.user,
         ...userData
     }
+
 
 
 

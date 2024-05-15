@@ -10,6 +10,9 @@ type games = {
     title: string,
     description: string,
     thumbnail_url: string,
+    is_active: boolean,
+    websocket_uri: string | null,
+    front_uri: string | null,
 }
 
 function Games() {

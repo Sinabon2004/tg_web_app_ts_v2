@@ -16,6 +16,7 @@ export default function Home() {
     const backButton = new BackButton(true, '6.3', postEvent);
     backButton.hide();
 
+
     //
     // useEffect(() => {
     //     if (initData?.startParam) {

@@ -1,12 +1,19 @@
 import {useEffect, useMemo, useState} from "react";
 
-
+type userData = {
+    // id: number;
+    // username?: string;
+    // lastName: string;
+    // firstName: string;
+    avatar_url: string | null;
+    money: number;
+}
 const useUserData = (userId: number | undefined) => {
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState<userData>();
     const [isLoading, setIsLoading] = useState(false);
 
     const url = useMemo(() => {
-        return userId ? `https://tg-mini-app.local/user/${userId}` : null;
+        return userId ? `https://accepted-elephant-jolly.ngrok-free.app/user/${userId}` : null;
     }, [userId]);
 
     useEffect(() => {

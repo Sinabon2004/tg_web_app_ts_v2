@@ -13,7 +13,7 @@ type userData = {
     username?: string;
     lastName?: string;
     firstName?: string;
-    photo_url?: string;
+    avatar_url?: string | null | undefined;
     money?: number | undefined;
 }
 interface UserProps {
@@ -22,7 +22,7 @@ interface UserProps {
 }
 export default function User(props: {user: userData}) {
 
-    console.log(props)
+
     const user = props.user
 
 
@@ -46,6 +46,7 @@ export default function User(props: {user: userData}) {
 
     const handleProfileClick = () => {
         setIsProfileOpen(!isProfileOpen);
+        if (isWalletOpen) setIsWalletOpen(false);
     };
 
 
