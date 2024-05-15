@@ -1,61 +1,34 @@
-
-interface Cell {
-    row: number;
-    col: number;
-}
-
-interface GameBoard {
-    board: string[][];
-}
-
-interface GameMessage {
-    message: string;
-}
-
-interface GameResult {
-    winner: string | null;
-    draw: boolean;
+type roomData = {
+    bet?: number,
+    connected_players?: object,
+    count_players?: number,
+    current_player_id?: number | null,
+    description?: string,
+    game_finished?: boolean,
+    game_id?: number,
+    game_progress?: any,
+    game_started?: boolean,
+    title?: string,
+    websocket_uri?: string,
+    winner_id?: number | null,
 }
 
 export class TickTackToeService {
-    private ws: WebSocket;
-    private board: string[][];
-    private currentTurn: number;
-    private isGameStarted: boolean;
+    public ws: WebSocket;
+    public data: roomData | undefined;
 
-    constructor(url: string, roomId: string, playerId: string) {
-        this.ws = new WebSocket(`${url}/ws/${roomId}/${playerId}`);
-        this.board = Array(4).fill(Array(4).fill(''));
-        this.currentTurn = 0;
-        this.isGameStarted = false;
+    constructor(url: string, uri: string, roomId: string, playerId: string) {
+        this.ws = new WebSocket(`${url}${uri}/${roomId}/${playerId}`);
+        this.data = undefined
 
         this.ws.onopen = () => {
             console.log('Connected to server');
-            // Отправляем сигнал "готов"
-            this.ws.send('ready');
         };
 
         this.ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            if (data.message) {
-                console.log(data.message);
-                if (data.message === 'Game started') {
-                    this.isGameStarted = true;
-                }
-            } else if (data.board) {
-                console.log('Received updated board:', data.board);
-                this.board = data.board;
-                if (this.isGameStarted) {
-                    // Ваша логика обработки обновления доски
-                }
-            } else if (data.result) {
-                console.log('Game result:', data.result);
-                if (data.result.winner) {
-                    console.log(`Winner is ${data.result.winner}`);
-                } else if (data.result.draw) {
-                    console.log('The game ended in a draw');
-                }
-                // Дополнительная логика завершения игры
+            if (data) {
+                this.data = data
             }
         };
 
@@ -68,34 +41,12 @@ export class TickTackToeService {
         };
     }
 
-    // Функция для обработки хода игрока
-    public makeMove(cell: Cell): void {
-        if (!this.isGameStarted) {
-            console.log('Waiting for both players to be ready');
-            return;
-        }
-
-        if (this.currentTurn !== 0) {
-            console.log('It is not your turn');
-            return;
-        }
-
-        if (this.board[cell.row][cell.col] !== '') {
-            console.log('Cell is already occupied');
-            return;
-        }
-
-        // Отправляем координаты хода на сервер
-        const move = `${cell.row},${cell.col}`;
-        this.ws.send(move);
-        console.log(`Sent move: ${move}`);
-
-        // Переключаем ход на другого игрока
-        this.currentTurn = 1 - this.currentTurn;
-    }
-
     // Функция для закрытия WebSocket соединения
     public closeConnection(): void {
         this.ws.close();
+    }
+
+    public update_data_game() {
+
     }
 }
