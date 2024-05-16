@@ -1,17 +1,19 @@
-import {FormEvent, useState} from "react";
-import {redirect, useRouter} from "next/navigation";
-
-
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type responseData = {
     redirect_to_room_uri: string;
-}
-const genRoomData = ({gameId, bet, countPlayers}: { gameId: number, bet: number, countPlayers: number } ) => {
+};
 
+const genRoomData = ({ gameId, bet, countPlayers }: { gameId: number; bet: number; countPlayers: number }) => {
     const game_id = gameId;
-    const count_players = countPlayers
+    const count_players = countPlayers;
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [error, setError] = useState(null);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const router = useRouter();
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent default form submission behavior
 
@@ -23,9 +25,10 @@ const genRoomData = ({gameId, bet, countPlayers}: { gameId: number, bet: number,
         };
 
         try {
-            const response = await fetch('https://accepted-elephant-jolly.ngrok-free.app/games/create-room', { // Replace with your actual API endpoint
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+            const response = await fetch("https://accepted-elephant-jolly.ngrok-free.app/games/create-room", {
+                // ... (replace with your actual API endpoint)
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(roomData),
             });
 
@@ -34,21 +37,20 @@ const genRoomData = ({gameId, bet, countPlayers}: { gameId: number, bet: number,
             }
 
             const responseData = await response.json();
-            if (responseData?.redirect_to_room_uri){
 
-                window.location.href = responseData.redirect_to_room_uri;
+            if (responseData?.redirect_to_room_uri) {
+                console.log("Redirecting to:", responseData.redirect_to_room_uri);
+                // Attempt redirection (consider using await or Promise.resolve)
+                await router.push(responseData.redirect_to_room_uri);
+            } else {
+                console.log("No redirect link found");
             }
-            else {
-                console.log("нет ссылки")
-            }
-
-
         } catch (error: any) {
             setError(error.message); // Set error state for potential display
         }
     };
 
     return { handleSubmit, error };
-}
+};
 
-export default genRoomData
+export default genRoomData;

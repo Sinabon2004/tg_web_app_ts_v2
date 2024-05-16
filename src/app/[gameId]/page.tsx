@@ -8,6 +8,7 @@ import Image from "next/image";
 import {BackButton, postEvent} from "@tma.js/sdk";
 import CreateRoomModal from "@/components/CreateRoomModal";
 import {useState} from "react";
+import JoinRoomModal from "@/components/JoinRoomModal";
 
 export default function GameDetailsPage(
     {params}: {
@@ -19,6 +20,11 @@ export default function GameDetailsPage(
     const handleModalClick = () => {
         setIsModalOpen(!isModalOpen);
     };
+    const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+    const handleModalClickJoin = () => {
+        setIsJoinModalOpen(!isJoinModalOpen);
+    };
+
 
 
 
@@ -68,7 +74,7 @@ export default function GameDetailsPage(
                             "cursor-not-allowed pointer-events-none opacity-50" : "")}
                     >Создать игру
                     </button>
-                    <button className={" p-4 text-2xl text-purple-100 font-bold" +
+                    <button onClick={handleModalClickJoin} className={" p-4 text-2xl text-purple-100 font-bold" +
                         " bg-purple-600 rounded-lg hover:text-purple-600 hover:bg-purple-100" +
                         " transition" + (!is_active ?
                             "cursor-not-allowed pointer-events-none opacity-50" : "")}
@@ -79,7 +85,7 @@ export default function GameDetailsPage(
 
 
             <CreateRoomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} gameData={gameData}/>
-
+            <JoinRoomModal isOpen={isJoinModalOpen} onClose={() => setIsJoinModalOpen(false)} gameData={gameData}/>
 
         </div>
     );

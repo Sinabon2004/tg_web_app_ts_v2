@@ -6,13 +6,12 @@ import {useInView} from "react-intersection-observer";
 import {id} from "postcss-selector-parser";
 
 type games = {
-    id: number,
-    title: string,
-    description: string,
-    thumbnail_url: string,
-    is_active: boolean,
-    websocket_uri: string | null,
-    front_uri: string | null,
+    id: number;
+    title: string;
+    description: string;
+    thumbnail_url: string;
+    is_active: boolean;
+
 }
 
 function Games() {
@@ -31,7 +30,7 @@ function Games() {
 
     if (!games) {
         return <div className={"h-[100dvh] w-full flex justify-center flex-col items-center bg-gray-800"}>
-            <h2 className="text-xl text-purple-200 font-bold">Идет загрузка игры</h2>
+            <h2 className="text-xl text-purple-200 font-bold">Идет загрузка игр</h2>
             <Image className={"w-[30%] ml-8"} src={"/animated/loading.svg"} width={100} height={100}   alt={"loading"}/>
         </div>; // Show a loading message while fetching data ф
     }
@@ -48,7 +47,7 @@ function Games() {
                                     <div className="group bg-gray-700 mb-4 p-4 scale-100 rounded-lg shadow-md hover:shadow-lg
                                  hover:scale-105 focus:scale-105 transition duration-300 border-[#6457E0] border-2 border-opacity-25 focus:border-opacity-95 hover:border-opacity-90">
                                         <img src={game.thumbnail_url ? game.thumbnail_url : "/images/game_placeholder.png"}
-                                             alt={game.title} className="h-[200px] w-[357px] object-cover rounded-lg
+                                             alt={game.title} className="max-h-[231px] max-w-[430px] w-full object-cover rounded-lg
                                                 scale-100 transition duration-500 group-hover:scale-105 focus:scale-105"/>
                                         <div className="p-4 ab">
                                             <h3 className="text-xl text-blue-400 font-semibold">{game.title}</h3>
