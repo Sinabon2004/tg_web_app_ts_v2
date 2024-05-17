@@ -9,6 +9,7 @@ import CreateRoomModal from "@/components/CreateRoomModal";
 import {init} from "@tma.js/sdk";
 import useUserData from "@/hooks/useUserData";
 import Link from "next/link";
+import clsx from "clsx";
 // import {init} from "@tma.js/sdk";
 
 
@@ -164,17 +165,23 @@ export default function Page(
     };
 
     const [typePlayer, setTypePlayer] = useState<string>("1");
-
+    let EnemyAvatar:any = null
     if (typePlayer == "1" && (playData?.connected_players !== undefined) && (playData?.connected_players !== null)) {
 
         if (String(user?.id) === Object.keys(playData?.connected_players)[0]) {
             setTypePlayer("X")
+            EnemyAvatar = Object.values(playData?.connected_players)[1]
 
 
-        } else setTypePlayer("O")
+        } else {
+            setTypePlayer("O")
+            EnemyAvatar = Object.values(playData?.connected_players)[0]
+        }
 
 
     }
+    let winAnimation = ""
+
 
 
     if ((playData?.connected_players !== undefined) && (playData?.connected_players !== null)) {
@@ -215,7 +222,7 @@ export default function Page(
                                     </div>
 
 
-                                    <div className="w-full flex flex-col   mb-3.5 ">
+                                    <div className="w-full flex flex-col    mb-3.5 ">
                                         <button onClick={handleClickReady}
                                                 className={isReady ? "group p-4 text-xl min-[350px]:text-2xl text-purple-600 font-semibold text-center bg-purple-100 rounded-lg" : "group p-4 text-xl min-[350px]:text-2xl text-purple-100 font-semibold  bg-purple-600 rounded-lg hover:text-purple-600 hover:bg-purple-100 transition flex   items-center text-center"}
                                         >
@@ -225,65 +232,156 @@ export default function Page(
                                 </div>
                             </div>
                             :
-                            (<div className="h-screen w-full flex justify-center bg-gray-800">
-                                <div className="flex flex-col gap-0">
-                                    {
-                                        playData?.game_progress.flatMap((row, y) => (
-                                            <div className="flex gap-0">
-                                                {
-                                                    row.map((el, x) => (
-                                                        <div key={x}
-                                                             className="flex justify-center items-center p-5 border-2 border-purple-100"
-                                                             onClick={() => {
-                                                                 if (el.user_id === null && gameWs) {
-                                                                     if (playData.current_player_id === user.id) {
-                                                                         gameWs?.send(`${y},${x}`);
-                                                                     }
-                                                                 }
+                            (<div className=" h-screen w-full flex flex-col gap-4 bg-gray-800">
+                                    <div className="relative bg-purple-100 p-2 h-fit rounded-lg">
+                                        {!(playData?.game_finished) ?
 
-                                                             }}>
-                                                            {
-                                                                el.user_id == null ? "" : (
-                                                                    el.user_id == user.id ?
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                             fill="none"
-                                                                             viewBox="0 0 24 24"
-                                                                             strokeWidth="1.5" stroke="currentColor"
-                                                                             className="w-full h-full">
-                                                                            <path strokeLinecap="round"
-                                                                                  strokeLinejoin="round"
-                                                                                  d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
-                                                                        </svg>
-                                                                        :
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                             fill="none"
-                                                                             viewBox="0 0 24 24"
-                                                                             strokeWidth="1.5" stroke="currentColor"
-                                                                             className="w-full h-full">
-                                                                            <path strokeLinecap="round"
-                                                                                  strokeLinejoin="round"
-                                                                                  d="M6 18 18 6M6 6l12 12"/>
-                                                                        </svg>
-                                                                )
-                                                            }
-                                                        </div>
-                                                    ))
-                                                }
+                                            winAnimation = "opacity-0 hidden"
+
+                                            :
+                                            winAnimation = "opacity-100 flex"
+                                        }
+                                            <div className={clsx("absolute  justify-center items-center inset-0 backdrop-blur-[6px]  border-[17px] border-gray-800 rounded-lg  ", winAnimation )}>
+                                                <div className="w-full h-full transition-all duration-150 bg-gray-800 gap-3 p-2 flex flex-col justify-center items-center">
+                                                    <img className="w-2/3" src="/images/gameOver.svg" alt=""/>
+                                                    <h2 className="text-2xl text-blue-600 font-bold " >Game over</h2>
+                                                    <h3 className="text-xl text-purple-200 font-bold" >{playData?.winner_id === null ? "Ничья" : (playData?.winner_id == user.id ? `Вы победили! ( и заработали  ${playData?.bet} монет)` : `Вы проиграли ( и потеряли ${playData?.bet} монет)`)}</h3>
+
+                                                    <Link
+                                                        className={" p-4 text-2xl text-purple-100 font-bold" +
+                                                            " bg-purple-600 rounded-lg hover:text-purple-600 hover:bg-purple-100" +
+                                                            " transition"}
+                                                        href={`/games/${ playData?.game_id }`} > Вернуться в меню </Link>
+                                                </div>
                                             </div>
-                                        ))
 
-                                    }
+                                        <div className="h-fit flex flex-col gap-0 bg-purple-950">
+                                            {
+                                                playData?.game_progress.flatMap((row, y) => (
+                                                    <div className="flex gap-0 h-1/4">
+                                                        {
+                                                            row.map((el, x) => (
+                                                                <div key={x}
+                                                                     className=" w-1/4 flex justify-center items-center p-5 border-2 border-purple-100"
+                                                                     onClick={() => {
+                                                                         if (el.user_id === null && gameWs) {
+                                                                             if (playData.current_player_id === user.id) {
+                                                                                 gameWs?.send(`${y},${x}`);
+                                                                             }
+                                                                         }
 
-                                    {!(playData?.game_finished) ?"": (
-                                        <div>
-                                            <h4>Игра завершена</h4>
-                                            <h3>{playData?.winner_id === null ? "Победтеля нет, деньги не спишутся" : (playData?.winner_id == user.id ? `Вы победили, скоро на ваш счёт прибудет ${playData?.bet} монет`:`Вы проиграли в честном бою, придётся списать у вас ${playData?.bet} монет`)}</h3>
+                                                                     }}>
+                                                                    {
+                                                                        el.user_id == null ?
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 fill="none"
+                                                                                 viewBox="0 0 24 24"
+                                                                                 strokeWidth="1.5" stroke="currentColor"
+                                                                                 className="w-full h-full opacity-0">
+                                                                                <path strokeLinecap="round"
+                                                                                      strokeLinejoin="round"
+                                                                                      d="M6 18 18 6M6 6l12 12"/>
+                                                                            </svg>
+                                                                            : (
+                                                                                el.user_id == user.id ?
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                         fill="none"
+                                                                                         viewBox="0 0 24 24"
+                                                                                         strokeWidth="1.5"
+                                                                                         stroke="currentColor"
+                                                                                         className="w-full h-full">
+                                                                                        <path strokeLinecap="round"
+                                                                                              strokeLinejoin="round"
+                                                                                              d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+                                                                                    </svg>
+                                                                                    :
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                         fill="none"
+                                                                                         viewBox="0 0 24 24"
+                                                                                         strokeWidth="1.5"
+                                                                                         stroke="currentColor"
+                                                                                         className="w-full h-full">
+                                                                                        <path strokeLinecap="round"
+                                                                                              strokeLinejoin="round"
+                                                                                              d="M6 18 18 6M6 6l12 12"/>
+                                                                                    </svg>
+                                                                            )
+                                                                    }
+                                                                </div>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                ))
+
+                                            }
+
+
                                         </div>
-                                    )}
+                                    </div>
+                                    <div className="flex justify-center items-center gap-4 px-7">
+                                        <div className="py-3">
+                                            <div className="flex flex-col gap-2 items-center">
+                                                <div
+                                                    className="relative flex justify-center w-[20vw] h-[20vw] bg-gradient-to-br  from-purple-600 to-blue-500 p-0.5 rounded-full">
+                                                    {(playData?.game_finished) ?
+                                                        (playData?.winner_id == user?.id)   ?
+                                                            <div className="absolute inset-0">
+                                                                <img src="/images/EmojiCool.svg" alt="winner"/>
+                                                            </div>
+                                                            :
+                                                            <div className="absolute inset-0">
+                                                                <img src="/images/EmojiSad.svg" alt="LOSER"/>
+                                                            </div>
+
+                                                        : "" }
+
+                                                    <img className="w-full h-full rounded-full"
+                                                         src="/docs/images/people/profile-picture-1.jpg"
+                                                         alt="Neil image"/>
+                                                </div>
+                                                <div className=" flex flex-col items-center">
+                                                    <p className="text-md text-gray-500 truncate dark:text-gray-400">
+                                                        {user?.username}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="grow flex justify-center items-center text-base font-semibold text-gray-900 dark:text-white">
+
+                                            {playData?.bet} $
+                                        </div>
+                                        <div className="py-3 sm:py-4">
+                                            <div className="flex flex-col gap-2 items-center">
+                                                <div
+                                                    className="relative flex justify-center w-[20vw] h-[20vw] bg-gradient-to-br  from-purple-600 to-blue-500 p-1 rounded-full">
+                                                    {(playData?.game_finished) ?
+                                                        (playData?.winner_id == user?.id)   ?
+                                                            <div className="absolute inset-0">
+                                                                <img src="/images/EmojiCool.svg" alt="winner"/>
+                                                            </div>
+                                                            :
+                                                            <div className="absolute inset-0">
+                                                                <img src="/images/EmojiSad.svg" alt="LOSER"/>
+                                                            </div>
+
+                                                        : "" }
+                                                    <img className="w-full h-full rounded-full"
+                                                         src="https://avatanplus.com/files/resources/mid/57d536b88e3e315718ddc107.png"
+                                                         alt="Neil image"/>
+                                                </div>
+                                                <div className=" flex flex-col items-center">
+                                                    <p className="text-md text-gray-500 truncate dark:text-gray-400">
+                                                        username
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
-
-
-                            </div>)
+                            )
                         : <div className={"h-[100dvh] w-full flex justify-center flex-col items-center bg-gray-800"}>
                             <h2 className="text-xl text-purple-200 font-bold">Идет загрузка сессии</h2>
                             <img className={"w-[30%] ml-8"} src={"/animated/loading.svg"} alt={"loading"}/>
