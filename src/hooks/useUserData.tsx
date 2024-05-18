@@ -10,7 +10,7 @@ const useUserData = (userId: number | undefined) => {
 
 
     const url = useMemo(() => {
-        return userId ? `https://accepted-elephant-jolly.ngrok-free.app/user/${userId}` : null;
+        return userId ? `https://api-tg-bot.bezabon.online:8080/user/${userId}` : null;
     }, [userId]);
 
     useEffect(() => {

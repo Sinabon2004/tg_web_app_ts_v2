@@ -23,30 +23,32 @@ const genRoomData = ({ gameId, bet, countPlayers }: { gameId: number; bet: numbe
             bet,
             count_players,
         };
+        if (roomData.bet !== 0 && roomData.bet !== null){
 
-        try {
-            const response = await fetch("https://accepted-elephant-jolly.ngrok-free.app/games/create-room", {
-                // ... (replace with your actual API endpoint)
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(roomData),
-            });
+            try {
+                const response = await fetch("https://api-tg-bot.bezabon.online:8080/games/create-room", {
+                    // ... (replace with your actual API endpoint)
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(roomData),
+                });
 
-            if (!response.ok) {
-                throw new Error(`Error creating room: ${response.statusText}`);
+                if (!response.ok) {
+                    throw new Error(`Error creating room: ${response.statusText}`);
+                }
+
+                const responseData = await response.json();
+
+                if (responseData?.redirect_to_room_uri) {
+                    console.log("Redirecting to:", responseData.redirect_to_room_uri);
+                    // Attempt redirection (consider using await or Promise.resolve)
+                    await router.push(responseData.redirect_to_room_uri);
+                } else {
+                    console.log("No redirect link found");
+                }
+            } catch (error: any) {
+                setError(error.message); // Set error state for potential display
             }
-
-            const responseData = await response.json();
-
-            if (responseData?.redirect_to_room_uri) {
-                console.log("Redirecting to:", responseData.redirect_to_room_uri);
-                // Attempt redirection (consider using await or Promise.resolve)
-                await router.push(responseData.redirect_to_room_uri);
-            } else {
-                console.log("No redirect link found");
-            }
-        } catch (error: any) {
-            setError(error.message); // Set error state for potential display
         }
     };
 

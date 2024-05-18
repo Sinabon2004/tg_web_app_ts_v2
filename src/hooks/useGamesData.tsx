@@ -1,28 +1,28 @@
 import {useEffect, useState} from "react";
 
-type Game = {
+type gameData = {
     id: number;
     title: string;
     description: string;
     thumbnail_url: string;
     is_active: boolean;
-};
+}
 
 const useGamesData = () => {
-    const [gameData, setGameData] = useState<Game[]>();
+    const [gameData, setGameData] = useState<gameData[]>([]);
 
     useEffect(() => {
         const fetchGameData = async () => {
 
             try {
-                const response = await fetch(`https://accepted-elephant-jolly.ngrok-free.app/games`, {
+                const response = await fetch(`https://api-tg-bot.bezabon.online:8080/games`, {
                     method: 'GET',
                     headers: {
                         'ngrok-skip-browser-warning': '69420',
                     },
                 });
                 const data = await response.json();
-
+                console.log(data)
 
 
                 setGameData(data);

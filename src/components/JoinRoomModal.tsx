@@ -54,8 +54,7 @@ const joinRoomModal: React.FC<ModalProps> = ({ isOpen, onClose, gameData}) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { handleSubmit, error } = useRoomJoin(`/play/ticktacktoe/${roomId}`);
 
-    console.log()
-    console.log(window.location.href)
+
     return (
         <div onClick={ () => { onClose() }} className={clsx(OpenClassWrapper, "mt-[80px]   duration-150  fixed inset-0 z-40  bg-gray-900 bg-opacity-75 flex justify-center items-center overflow-hidden")} >
             <div onClick={ e => e.stopPropagation() } className={clsx(OpenClassContent,"relative transition-all  duration-400 max-w-[500px] bg-gray-700 p-6 w-full rounded-lg shadow-xl")}>

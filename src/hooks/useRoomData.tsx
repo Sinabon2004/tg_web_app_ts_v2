@@ -41,7 +41,7 @@ const useRoomData = (roomId: number) => {
                 try {
 
                     const response = await fetch(
-                        `https://accepted-elephant-jolly.ngrok-free.app/games/get_room/${roomId}`,
+                        `https://api-tg-bot.bezabon.online:8080/games/get_room/${roomId}`,
                         {
                             method: "get",
                             headers: new Headers({

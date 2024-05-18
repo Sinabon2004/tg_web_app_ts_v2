@@ -3,9 +3,9 @@ import Link from 'next/link';
 import Image from "next/image";
 import useGamesData from "@/hooks/useGamesData";
 import {useInView} from "react-intersection-observer";
-import {id} from "postcss-selector-parser";
 
-type games = {
+
+type Games = {
     id: number;
     title: string;
     description: string;
@@ -15,7 +15,7 @@ type games = {
 }
 
 function Games() {
-    let games = useGamesData();
+    let games:Games[]  = useGamesData();
     const [loadedLists, setLoadedLists] = useState(2);
 
 
@@ -37,16 +37,18 @@ function Games() {
 
 
     return (
-        <div className={"h-[100%] w-full bg-gray-800"}>
+        <div className={"h-[100%] w-full flex justify-center bg-gray-800"}>
             <div className="bg-gray-800 py-8 mt-[80px] max-w-[500px] ">
                 <div className="mx-auto !py-2 !px-6 ">
                     {Array.from({ length: loadedLists }).map((_, index) => (
                         <React.Fragment key={index}> {/* Use React.Fragment for empty elements */}
                             {games.map(game => (
-                                <Link key={game.id} href={`/${game.id}`} ref={ref}>
+                                <Link   key={game.id} href={`/${game.id}`} ref={ref}>
                                     <div className="group bg-gray-700 mb-4 p-4 scale-100 rounded-lg shadow-md hover:shadow-lg
                                  hover:scale-105 focus:scale-105 transition duration-300 border-[#6457E0] border-2 border-opacity-25 focus:border-opacity-95 hover:border-opacity-90">
-                                        <img src={game.thumbnail_url ? game.thumbnail_url : "/images/game_placeholder.png"}
+                                        <Image width={100}
+                                               height={100}
+                                               src={game.thumbnail_url ? game.thumbnail_url : "/images/game_placeholder.png"}
                                              alt={game.title} className="max-h-[231px] max-w-[430px] w-full object-cover rounded-lg
                                                 scale-100 transition duration-500 group-hover:scale-105 focus:scale-105"/>
                                         <div className="p-4 ab">

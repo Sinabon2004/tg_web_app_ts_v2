@@ -3,7 +3,6 @@
 import {useRouter} from "next/navigation";
 import useGameData from "@/hooks/useGameData";
 import Header from "@/components/header";
-import Link from "next/link";
 import Image from "next/image";
 import {BackButton, postEvent} from "@tma.js/sdk";
 import CreateRoomModal from "@/components/CreateRoomModal";
