@@ -10,6 +10,7 @@ import useUserData from "@/hooks/useUserData";
 import Link from "next/link";
 import clsx from "clsx";
 import Image from "next/image";
+import Avatar from "@/components/avatar";
 
 
 
@@ -53,7 +54,7 @@ type userData = {
 
 
 interface Player  {
-    id: string;
+    id: number;
     last_name: string | null;
     first_name: string;
     username: string;
@@ -69,22 +70,25 @@ interface Players  {
 const getPlayer1And2 = (connected_players: object ) => {
 
     const [playerId1, playerId2] = Object.keys(connected_players);
-    const [playerValue1, playerValue2] = Object.values(connected_players)
+    const [playerValue1, playerValue2] = Object.values(connected_players);
+
 
 
     // Create Player1 and Player2 objects
     const player1: Player = {
-        id: playerId1,
+        id: parseInt(playerId1),
         ...playerValue1,
 
     };
 
     const player2: Player = {
-        id: playerId2,
+        id: parseInt(playerId2),
         ...playerValue2,
 
     };
+    console.log(typeof player2?.id);
     return {player1, player2};
+
 
 
 
@@ -253,21 +257,25 @@ export default function Page(
 
                 <div className={"h-[100dvh] w-full flex justify-center mt-[80px] bg-gray-800"}>
                     <Header/>
-                    <div className={"bg-gray-900 py-8 px-4 w-full max-w-[500px] flex flex-col gap-5"}>
+                    <div className={" py-8 px-4 w-full max-w-[500px] flex flex-col gap-5"}>
                             <div className=" h-screen w-full flex flex-col gap-4 bg-gray-800">
                                         <div className="relative bg-purple-100 p-2 h-fit rounded-lg">
 
                                             <div className={clsx("absolute  justify-center items-center inset-0 backdrop-blur-[6px]  border-[17px] border-gray-800 rounded-lg  ", winAnimation )}>
-                                                <div className="w-full h-full transition-all duration-150 bg-gray-800 gap-3 p-2 flex flex-col justify-center items-center">
-                                                    <Image className="w-2/3" src="/images/gameOver.svg"  width={100} height={100}  alt={"gameOver"}/>
-                                                    <h2 className="text-2xl text-blue-600 font-bold " >Game over</h2>
-                                                    <h3 className="text-xl text-purple-200 font-bold" >{playData?.winner_id === null ? "Ничья" : (playData?.winner_id == user.id ? `Вы победили! ( и заработали  ${playData?.bet} монет)` : `Вы проиграли ( и потеряли ${playData?.bet} монет)`)}</h3>
+                                                <div
+                                                    className="w-full h-full transition-all duration-150 bg-gray-800 gap-3 p-2 flex flex-col justify-center items-center">
+
+
+                                                    <Image className="w-2/3" src="/images/gameOver.gif" width={100}
+                                                           height={100} alt={"gameOver"}/>
+                                                    <h2 className="text-2xl text-blue-600 font-bold ">{playData?.winner_id === null ? "Ничья" : (playData?.winner_id == user.id ? `Вы победили!` : `Вы проиграли`)}</h2>
+                                                    <h3 className="text-xl text-purple-200 font-bold">{playData?.winner_id === null ? "Ничья" : (playData?.winner_id == user.id ? `( заработано  ${playData?.bet} монет)` : `( потеряно ${playData?.bet} монет)`)}</h3>
 
                                                     <Link
                                                         className={" p-4 text-2xl text-purple-100 font-bold" +
                                                             " bg-purple-600 rounded-lg hover:text-purple-600 hover:bg-purple-100" +
                                                             " transition"}
-                                                        href={`/`} > Вернуться в меню </Link>
+                                                        href={`/`}> Вернуться в меню </Link>
                                                 </div>
                                             </div>
 
@@ -321,13 +329,13 @@ export default function Page(
                                         </div>
                                         <div className="flex justify-center items-center gap-4 px-7">
                                             <div className="py-3">
-                                                <div className="flex flex-col gap-2 items-center">
+                                                <div className="flex flex-col gap-2 items-center overflow-hidden pr-[34px] py-[20px]">
                                                     <div
                                                         className="relative flex justify-center w-[20vw] h-[20vw] bg-gradient-to-br  from-purple-600 to-blue-500 p-0.5 rounded-full">
                                                         {(playData?.game_finished) ?
-                                                            (playData?.winner_id == parseInt(player1.id))   ?
+                                                            (playData?.winner_id == player1.id)   ?
                                                                 <div className="absolute inset-0">
-                                                                    <Image width={100} height={100} src="/images/EmojiCool.svg" alt="ЦШТТУК"/>
+                                                                    <Image width={100} height={100} src="/images/EmojiCool.svg" alt="WINNER"/>
                                                                 </div>
                                                                 :
                                                                 <div className="absolute inset-0">
@@ -336,9 +344,8 @@ export default function Page(
 
                                                             : "" }
 
-                                                        <Image className="w-full h-full rounded-full"
-                                                               src="/docs/images/people/profile-picture-1.jpg"
-                                                               alt="Neil image"  width={100}  height={100}/>
+                                                        <Avatar user={player1} className={"rounded-full"}></Avatar>
+                                                        <Image className={`transition-all absolute w-3/4 translate-x-[50%] -translate-y-[35%] rotate-[25deg] animate-pulse ${playData.current_player_id === player1.id && !playData.game_finished ? "left-0" : "left-[-200%]"} `} src="/ticktacktoe/your-turn.png" width={100} height={100} alt="your_turn"/>
                                                     </div>
                                                     <div className=" flex flex-col items-center">
                                                         <p className="text-md text-gray-500 truncate dark:text-gray-400">
@@ -353,11 +360,11 @@ export default function Page(
                                                 {playData?.bet} ₽
                                             </div>
                                             <div className="py-3 sm:py-4">
-                                                <div className="flex flex-col gap-2 items-center">
+                                                <div className="flex flex-col gap-2 items-center overflow-hidden pl-[34px] py-[20px]">
                                                     <div
-                                                        className="relative flex justify-center w-[20vw] h-[20vw] bg-gradient-to-br  from-purple-600 to-blue-500 p-1 rounded-full">
+                                                        className="  relative flex justify-center w-[20vw] h-[20vw] bg-gradient-to-br  from-purple-600 to-blue-500 p-1 rounded-full">
                                                         {(playData?.game_finished) ?
-                                                            (playData?.winner_id == parseInt(player2.id))   ?
+                                                            (playData?.winner_id == player2.id)   ?
                                                                 <div className="absolute inset-0">
                                                                     <Image src="/images/EmojiCool.svg" alt="winner"  width={100}  height={100}/>
                                                                 </div>
@@ -367,9 +374,8 @@ export default function Page(
                                                                 </div>
 
                                                             : "" }
-                                                        <Image className="w-full h-full rounded-full"
-                                                               src="https://avatanplus.com/files/resources/mid/57d536b88e3e315718ddc107.png"
-                                                               alt="Neil image"  width={100}  height={100}/>
+                                                        <Avatar user={player2} className={"rounded-full"}></Avatar>
+                                                        <Image className={`transition-all absolute w-3/4 -translate-x-[50%] -translate-y-[35%] rotate-[-25deg] animate-pulse ${playData.current_player_id === player2.id && !playData.game_finished ? "left-0" : "left-[-200%]"} `} src="/ticktacktoe/your-turn.png" width={100} height={100} alt="your_turn"/>
                                                     </div>
                                                     <div className=" flex flex-col items-center">
                                                         <p className="text-md text-gray-500 truncate dark:text-gray-400">

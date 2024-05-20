@@ -1,3 +1,5 @@
+"use client"
+
 import useHeaderLogic from '@/hooks/useHeaderLogic';
 import Wallet from "@/components/wallet";
 import Avatar from "@/components/avatar";
