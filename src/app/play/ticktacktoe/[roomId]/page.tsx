@@ -120,7 +120,7 @@ export default function Page(
                 try {
 
                     const response = await fetch(
-                        `https://api-tg-bot.bezabon.online:8080/games/get_room/${params.roomId}`,
+                        `https://api-tg-bot.bezabon.online/games/get_room/${params.roomId}`,
                         {
                             method: "get",
                             headers: new Headers({
