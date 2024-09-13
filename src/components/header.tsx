@@ -5,9 +5,9 @@ import Wallet from "@/components/wallet";
 import Avatar from "@/components/avatar";
 import Profile from "@/components/profile";
 import User from "@/components/user";
-import {init} from "@tma.js/sdk";
 import useGameData from "@/hooks/useGameData";
 import useUserData from "@/hooks/useUserData";
+import {retrieveLaunchParams} from "@telegram-apps/sdk";
 
 type userData = {
     // id: number;
@@ -20,7 +20,7 @@ type userData = {
 export default function Header() {
 
 
-    const { initData} = init();
+    const { initData} = retrieveLaunchParams();
     const userData:userData | undefined = useUserData(initData?.user?.id);
     const user = {
         ...initData?.user,

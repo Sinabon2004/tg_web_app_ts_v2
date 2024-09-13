@@ -4,10 +4,10 @@ import {useRouter} from "next/navigation";
 import useGameData from "@/hooks/useGameData";
 import Header from "@/components/header";
 import Image from "next/image";
-import {BackButton, postEvent} from "@tma.js/sdk";
 import CreateRoomModal from "@/components/CreateRoomModal";
 import {useState} from "react";
 import JoinRoomModal from "@/components/JoinRoomModal";
+import {BackButton, postEvent} from "@telegram-apps/sdk-react";
 
 export default function GameDetailsPage(
     {params}: {
