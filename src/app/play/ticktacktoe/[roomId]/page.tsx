@@ -113,7 +113,7 @@ export default function Page(
                 try {
 
                     const response = await fetch(
-                        `https://api-tg-bot.bezabon.online:8080/games/get_room/${params.roomId}`,
+                        `https://api-tg-bot.bezabon.online/games/get_room/${params.roomId}`,
                         {
                             method: "get",
                             headers: new Headers({
@@ -152,7 +152,7 @@ export default function Page(
             if (!gameWs) {
 
                 // console.log(`wss://accepted-elephant-jolly.ngrok-free.app${String(roomData.websocket_uri)}/${String(params.roomId)}/${String(user?.id)}`);
-                const service = new WebSocket(`wss://api-tg-bot.bezabon.online:8080${String(roomData.websocket_uri)}/${String(params.roomId)}/${String(user?.id)}`);
+                const service = new WebSocket(`https://api-tg-bot.bezabon.online${String(roomData.websocket_uri)}/${String(params.roomId)}/${String(user?.id)}`);
                 // new TickTackToeService("wss://accepted-elephant-jolly.ngrok-free.app", String(roomData.websocket_uri), String(params.roomId), String(userId));
                 setGameWs(service);
             }
