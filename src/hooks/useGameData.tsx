@@ -8,7 +8,7 @@ const useGameData = (gameId: number) => {
         const fetchGameData = async () => {
             if (gameId) {
                 try {
-                    const response = await fetch(`https://api-tg-bot.bezabon.online/games/${gameId}`, {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/games/${gameId}`, {
                         method: 'GET',
                         headers: {
                             'ngrok-skip-browser-warning': '69420',

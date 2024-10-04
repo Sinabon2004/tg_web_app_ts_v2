@@ -1,41 +1,61 @@
-"use client"
+"use client";
 
-import useHeaderLogic from '@/hooks/useHeaderLogic';
+import useHeaderLogic from "@/hooks/useHeaderLogic";
 import Wallet from "@/components/wallet";
 import Avatar from "@/components/avatar";
 import Profile from "@/components/profile";
 import User from "@/components/user";
+import Logo from "@/components/Logo";
 import useGameData from "@/hooks/useGameData";
 import useUserData from "@/hooks/useUserData";
-import {retrieveLaunchParams} from "@telegram-apps/sdk";
+import {
+  InitData,
+  LaunchParams,
+  retrieveLaunchParams,
+} from "@telegram-apps/sdk";
+import ShowStat from "./ShowStat";
+import { useEffect, useState } from "react";
+import { log } from "console";
+import Menu from './Menu'
 
 type userData = {
-    // id: number;
-    // username?: string;
-    // lastName: string;
-    // firstName: string;
-    avatar_url: string | null | undefined;
-    money: number;
-}
+  // id: number;
+  // username?: string;
+  // lastName: string;
+  // firstName: string;
+  avatar_url: string | null | undefined;
+  money: number;
+};
 export default function Header() {
-
-
-    const { initData} = retrieveLaunchParams();
-    const userData:userData | undefined = useUserData(initData?.user?.id);
-    const user = {
-        ...initData?.user,
-        ...userData
+  const [isReady, setReady] = useState(false);
+  const [TgData, setTgData] = useState<LaunchParams | null>(null);
+  useEffect(() => {
+    setReady(true);
+    const initData = retrieveLaunchParams();
+    if (initData) {
+      setTgData(initData);
     }
-
-
-
-
-    return (
-
-        <header className="bg-gray-900 text-gray-200 shadow-lg fixed w-full top-0 z-10 py-1">
-            <User user={user} />
-        </header>
-    );
+  }, []);
+  const userData: any = useUserData(TgData?.initData?.user?.id);
+  const user = {
+    ...TgData?.initData?.user,
+    ...userData,
+  };
+  if (!isReady || !userData) {
+    return null;
+  }
+  return (
+    <header
+      className="backdrop-blur-[10px] fixed w-full top-0 z-10 p-3
+                       flex justify-between items-center"
+    >
+      <Logo />
+      <div className="flex gap-1 items-center">
+        <ShowStat src="/images/ticket.png" value={user.money} />
+        <ShowStat src="/images/star.png" value={"0"} />
+        <Menu user={user}/>
+      </div>
+      {/* <User user={user} /> */}
+    </header>
+  );
 }
-
-

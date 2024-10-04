@@ -26,7 +26,7 @@ const genRoomData = ({ gameId, bet, countPlayers }: { gameId: number; bet: numbe
         if (roomData.bet !== 0 && roomData.bet !== null){
 
             try {
-                const response = await fetch("https://api-tg-bot.bezabon.online/games/create-room", {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/games/create-room`, {
                     // ... (replace with your actual API endpoint)
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

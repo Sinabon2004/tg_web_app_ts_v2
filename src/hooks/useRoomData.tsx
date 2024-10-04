@@ -41,7 +41,7 @@ const useRoomData = (roomId: number) => {
                 try {
 
                     const response = await fetch(
-                        `https://api-tg-bot.bezabon.online/games/get_room/${roomId}`,
+                        `${process.env.NEXT_PUBLIC_API_URL}/games/get_room/${roomId}`,
                         {
                             method: "get",
                             headers: new Headers({

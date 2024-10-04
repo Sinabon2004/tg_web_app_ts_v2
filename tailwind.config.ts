@@ -9,7 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-gamee)']
+        sans: ['var(--font-gamee)'],
+        inter: ['var(--font-inter)']
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -20,6 +21,12 @@ const config: Config = {
         'xs' : '400px'
       }
     },
+    colors: {
+      "primary-white": "#ffffff",
+      "primary-black": "#000000",
+      "primary-dark-blue": "#040E43",
+      "primary-pink": "#ff73d4",
+    }
   },
   plugins: [],
 };
