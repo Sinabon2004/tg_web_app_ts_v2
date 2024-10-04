@@ -1,12 +1,7 @@
 "use client";
 
-import useHeaderLogic from "@/hooks/useHeaderLogic";
-import Wallet from "@/components/wallet";
-import Avatar from "@/components/avatar";
-import Profile from "@/components/profile";
-import User from "@/components/user";
 import Logo from "@/components/Logo";
-import useGameData from "@/hooks/useGameData";
+
 import useUserData from "@/hooks/useUserData";
 import {
   InitData,
