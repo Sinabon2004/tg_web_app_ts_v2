@@ -41,8 +41,8 @@ const CreateRoomModal = ({ isOpen, onClose, gameData }: RoomProps) => {
     const OpenClassContent = isOpen ? "top-0" : "top-[-100%]";
 
     return (
-        <div onClick={ () => { onClose() }} className={clsx(OpenClassWrapper, "mt-[80px]   duration-150  fixed inset-0 z-40  bg-gray-900 bg-opacity-75 flex justify-center items-center overflow-hidden")} >
-            <div onClick={ e => e.stopPropagation() } className={clsx(OpenClassContent,"relative transition-all  duration-400 max-w-[500px] bg-gray-700 p-6 w-full rounded-lg shadow-xl")}>
+        <div onClick={ () => { onClose() }} className={clsx(OpenClassWrapper, "mt-[80px]   duration-150  fixed inset-0 z-40  bg-primary-black bg-opacity-85 flex justify-center items-center overflow-hidden")} >
+            <div onClick={ e => e.stopPropagation() } className={clsx(OpenClassContent,"relative transition-all  duration-400 max-w-[500px] bg-primary-dark-blue p-6 w-full rounded-lg shadow-xl")}>
 
                 <form onSubmit={(e) => {
                     if (bet === 0 || isNaN(bet)) {
@@ -61,11 +61,11 @@ const CreateRoomModal = ({ isOpen, onClose, gameData }: RoomProps) => {
                             id="default-input"
                             value={!isNaN(bet) ? bet : ""}  // Set value from state
                             onChange={(e) => setBet(parseInt(e.currentTarget.value))} // Update state on change
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-primary-dark-blue border border-primary-pink/80 text-primary-white font-semibold text-sm rounded-lg focus:ring-primary-pink focus:border-primary-pink block w-full p-2.5 "
                         />
 
 
-                        <h2 className="text-xl text-purple-200 font-bold">Выберите количество игроков:</h2>
+                        <h2 className="text-md text-purple-200 font-bold">Выберите количество игроков:</h2>
                         <div className="flex flex-row">
                             <div className="flex items-center me-4">
                                 <input id="purple-radio" type="radio" value={2} onChange={(e) => {
@@ -96,8 +96,8 @@ const CreateRoomModal = ({ isOpen, onClose, gameData }: RoomProps) => {
                         </div>
 
                     </div>
-                    <button type="submit"  className={" mt-4 p-4 text-2xl text-purple-100 font-bold" +
-                        " bg-purple-600 rounded-lg hover:text-purple-600 hover:bg-purple-100" +
+                    <button type="submit"  className={" mt-4 p-3 text-xl text-primary-white font-bold" +
+                        " bg-primary-pink/80 rounded-lg hover:text-primary-pink/90 hover:bg-primary-white/80" +
                         " transition" }
                     >Создать комнату
                     </button>
