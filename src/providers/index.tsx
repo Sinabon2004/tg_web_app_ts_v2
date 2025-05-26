@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import {
   LaunchParams,
   SDKProvider,
@@ -38,7 +39,22 @@ export default function MyAppProvider({
 
   if (!isClient || !TgData) {
     // Optionally, return a loader or null while initializing
-    return null;
+    return (
+          <div
+            className={
+              "h-[100dvh] w-full flex justify-center flex-col items-center bg-gray-800"
+            }
+          >
+            <h2 className="text-xl text-purple-200 font-bold">Идет загрузка</h2>
+            <Image
+              className={"w-[30%] ml-8"}
+              src={"/animated/loading.svg"}
+              width={100}
+              height={100}
+              alt={"loading"}
+            />
+          </div>
+        );
   }
 
   return (

@@ -26,7 +26,7 @@ function Games() {
   //         setLoadedLists(loadedLists+1)
   //     }
   // }, [inView, entry]);
-
+  
   if (!games) {
     return (
       <div
@@ -43,8 +43,9 @@ function Games() {
           alt={"loading"}
         />
       </div>
-    ); // Show a loading message while fetching data ф
+    );
   }
+
 
   return (
     <div className={"h-[100%] w-full flex justify-center bg-gray-800"}>

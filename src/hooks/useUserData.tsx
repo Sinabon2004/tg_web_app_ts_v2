@@ -10,7 +10,7 @@ const useUserData = (userId: number | undefined) => {
 
 
     const url = useMemo(() => {
-        return userId ? `${process.env.NEXT_PUBLIC_API_URL}/user/${userId}` : null;
+        return userId ? `${process.env.NEXT_PUBLIC_API_URL}/user/${895701241}` : null;
     }, [userId]);
 
     useEffect(() => {
@@ -26,7 +26,8 @@ const useUserData = (userId: number | undefined) => {
                     const data = await response.json();
                     setUserData(data);
                 } catch (error) {
-                    console.error('Ошибка при загрузке данных кошелька:', error);
+                    console.error('\
+                        :', error);
                     // Здесь можно добавить обработку ошибок, например, показать сообщение об ошибке
                 }
             }
