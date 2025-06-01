@@ -238,7 +238,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
 
           <main className="relative min-h-screen flex flex-col">
             <Header />
-            <div className="flex-1 container mx-auto px-4 py-6">
+            <div className="flex-1 container mx-auto px-4 py-6 mt-[72px]">
               <div className="mx-auto max-w-2xl h-full flex flex-col">
                 {/* Верхняя навигация */}
                 <div className="mb-4">
@@ -316,7 +316,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                   </div>
 
                   {/* Информация об игроках */}
-                  <div className="border-t border-gray-800/50 bg-gray-900/50 p-6">
+                  <div className="border-none border-gray-800/50 bg-gray-900/50 p-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
                         <div className="relative">
