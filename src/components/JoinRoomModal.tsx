@@ -1,8 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
-import genRoomData from "@/hooks/GenRoomData";
-import { useRouter } from "next/navigation";
-import { router } from "next/client";
 import useRoomJoin from "@/hooks/useRoomJoin";
 
 interface ModalProps {
@@ -10,10 +7,6 @@ interface ModalProps {
   onClose: () => void;
   gameData: GameData;
 }
-
-type RoomId = {
-  roomId: any;
-};
 
 type GameData = {
   id: number;
@@ -25,60 +18,63 @@ type GameData = {
   front_uri: string;
 };
 
-const joinRoomModal: React.FC<ModalProps> = ({ isOpen, onClose, gameData }) => {
-  const gameId = gameData?.id;
-
-  let OpenClassWrapper = isOpen ? "top-0" : "top-[100%]";
-  let OpenClassContent = isOpen ? "top-0" : "top-[-100%]";
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [roomId, setRoomId] = React.useState("123");
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+const JoinRoomModal: React.FC<ModalProps> = ({ isOpen, onClose, gameData }) => {
+  const [roomId, setRoomId] = React.useState("");
   const { handleSubmit, error } = useRoomJoin(`/play/ticktacktoe/${roomId}`);
 
   return (
     <div
-      onClick={() => {
-        onClose();
-      }}
+      onClick={onClose}
       className={clsx(
-        OpenClassWrapper,
-        "mt-[80px]   duration-150  fixed inset-0 z-40  bg-primary-black bg-opacity-85 flex justify-center items-center overflow-hidden"
+        "fixed inset-0 z-40 mt-[80px] flex items-center justify-center transition-all duration-300",
+        isOpen 
+          ? "opacity-100 pointer-events-auto" 
+          : "opacity-0 pointer-events-none"
       )}
     >
+      <div className="absolute inset-0 bg-primary-black bg-opacity-85 backdrop-blur-sm" />
       <div
         onClick={(e) => e.stopPropagation()}
         className={clsx(
-          OpenClassContent,
-          "relative transition-all  duration-400 max-w-[500px] bg-primary-dark-blue p-6 w-full rounded-lg shadow-xl"
+          "relative w-full max-w-[500px] transform rounded-lg bg-primary-dark-blue p-6 shadow-xl transition-all duration-300",
+          isOpen 
+            ? "translate-y-0 opacity-100" 
+            : "translate-y-8 opacity-0"
         )}
       >
         <form
-          onSubmit={handleSubmit}
-          className="flex  mt-4 flex-col items-center  w-full gap-3"
+          onSubmit={(e) => {
+            if (!roomId.trim()) {
+              e.preventDefault();
+              return;
+            }
+            handleSubmit(e);
+          }}
+          className="flex mt-4 flex-col items-center w-full gap-3"
         >
-          <div className="flex flex-col w-full  gap-4">
-            <h1 className="text-xl text-primary-white font-bold ">
+          <div className="flex flex-col w-full gap-4">
+            <h2 className="text-xl text-purple-200 font-bold">
               Введите ID комнаты
-            </h1>
+            </h2>
             <input
               type="text"
-              id="default-input"
               value={roomId}
-              onChange={(e) => setRoomId(e.currentTarget.value)}
-              className="bg-primary-white border border-primary-pink text-primary-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              onChange={(e) => setRoomId(e.target.value)}
+              placeholder="Например: abc123"
+              className="bg-primary-dark-blue border border-primary-pink/80 text-primary-white font-semibold text-sm rounded-lg focus:ring-primary-pink focus:border-primary-pink block w-full p-2.5 transition-colors duration-200"
             />
           </div>
           <button
             type="submit"
-            className={
-              " mt-4 p-4 text-xl text-primary-white font-bold" +
-              " bg-primary-pink/50 rounded-lg hover:text-primary-dark-blue hover:bg-primary-white/80" +
-              " transition"
-            }
+            disabled={!roomId.trim()}
+            className={clsx(
+              "mt-4 p-3 text-xl text-primary-white font-bold bg-primary-pink/80 rounded-lg transition-all duration-200",
+              roomId.trim()
+                ? "hover:text-primary-pink/90 hover:bg-primary-white/80 hover:scale-105"
+                : "opacity-50 cursor-not-allowed"
+            )}
           >
-            присоединиться
+            Присоединиться
           </button>
         </form>
       </div>
@@ -86,4 +82,4 @@ const joinRoomModal: React.FC<ModalProps> = ({ isOpen, onClose, gameData }) => {
   );
 };
 
-export default joinRoomModal;
+export default JoinRoomModal;

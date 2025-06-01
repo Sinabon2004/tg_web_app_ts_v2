@@ -8,28 +8,23 @@ const useRoomJoin = (redirect_to_room_uri:string  ) => {
 
 
 
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent default form submission behavior
 
         // Construct the room data object
 
         try {
-
-
-
-            if (redirect_to_room_uri){
-
-                window.location.href = redirect_to_room_uri;
-                console.log(redirect_to_room_uri)
-            }
-            else {
-                console.log("нет ссылки")
+            if (!redirect_to_room_uri) {
+                throw new Error("Ссылка на комнату не найдена");
             }
 
+            // Here you can add any additional validation or API calls before redirect
+            // For example, checking if the room exists, has space, etc.
 
-        } catch (error: any) {
-            setError(error.message); // Set error state for potential display
+            window.location.href = redirect_to_room_uri;
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Произошла ошибка при присоединении к комнате");
         }
     };
 
