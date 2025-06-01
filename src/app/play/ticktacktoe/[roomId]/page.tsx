@@ -218,23 +218,42 @@ export default function Page({ params }: { params: { roomId: number } }) {
                 </p>
                 <Link
                   href="/"
-                  className={`mt-6 inline-block w-full rounded-lg px-6 py-3 text-lg font-medium text-white transition-all duration-300 hover:scale-105 ${
+                  className={`mt-6 inline-block w-full rounded-xl px-6 py-4 text-lg font-medium text-white transition-all duration-300 transform hover:scale-105 relative group overflow-hidden ${
                     playData.winner_id === user.id
-                      ? "bg-green-500 hover:bg-green-400"
-                      : "bg-red-500 hover:bg-red-400"
+                      ? "bg-gradient-to-r from-green-500 via-green-400 to-green-500"
+                      : "bg-gradient-to-r from-red-500 via-red-400 to-red-500"
                   }`}
                 >
-                  Вернуться в меню
+                  <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L4.414 9H17a1 1 0 110 2H4.414l5.293 5.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                    </svg>
+                    Вернуться в меню
+                  </span>
                 </Link>
               </div>
             </div>
           )}
 
-          <main className="relative">
+          <main className="relative min-h-screen flex flex-col">
             <Header />
-            <div className="container mx-auto px-4 pt-24">
-              <div className="mx-auto max-w-lg">
-                <div className={`overflow-hidden rounded-2xl bg-gray-900/90 backdrop-blur-sm ${
+            <div className="flex-1 container mx-auto px-4 py-6">
+              <div className="mx-auto max-w-2xl h-full flex flex-col">
+                {/* Верхняя навигация */}
+                <div className="mb-4">
+                  <Link
+                    href="/"
+                    className="inline-flex items-center px-6 py-3 rounded-xl font-medium text-lg transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-primary-pink via-purple-500 to-blue-500 text-white shadow-lg hover:shadow-xl"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L4.414 9H17a1 1 0 110 2H4.414l5.293 5.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                    </svg>
+                    Вернуться в меню
+                  </Link>
+                </div>
+
+                <div className={`flex-1 overflow-hidden rounded-2xl bg-gray-900/90 backdrop-blur-sm ${
                   playData.game_finished
                     ? playData.winner_id === user.id
                       ? "shadow-[0_0_15px_rgba(34,197,94,0.2)]"
@@ -243,13 +262,13 @@ export default function Page({ params }: { params: { roomId: number } }) {
                 }`}>
                   {/* Игровая сетка */}
                   <div className="relative aspect-square p-4">
-                    <div className="relative grid h-full w-full grid-cols-3 gap-0 rounded-xl bg-gray-800/50">
+                    <div className="relative grid h-full w-full grid-cols-4 gap-0 rounded-xl bg-gray-800/50">
                       {playData?.game_progress.map((row, y) =>
                         row.map((el, x) => (
                           <button
                             key={`${y}-${x}`}
                             className={clsx(
-                              "group relative aspect-square p-4 transition-all duration-300",
+                              "group relative aspect-square p-3 transition-all duration-300",
                               "border-[1px]",
                               playData.game_finished
                                 ? playData.winner_id === user.id
@@ -265,8 +284,8 @@ export default function Page({ params }: { params: { roomId: number } }) {
                                 : "bg-gray-800",
                               y === 0 && "border-t-0",
                               x === 0 && "border-l-0",
-                              y === 2 && "border-b-0",
-                              x === 2 && "border-r-0"
+                              y === 3 && "border-b-0",
+                              x === 3 && "border-r-0"
                             )}
                             onClick={() => {
                               if (el.user_id === null && gameWs) {
@@ -284,8 +303,8 @@ export default function Page({ params }: { params: { roomId: number } }) {
                                 <Image
                                   src={el.user_id == user.id ? "/ticktacktoe/O.svg" : "/ticktacktoe/X.svg"}
                                   alt={el.user_id == user.id ? "O" : "X"}
-                                  width={40}
-                                  height={40}
+                                  width={30}
+                                  height={30}
                                   className="h-full w-full transition-all duration-300"
                                 />
                               </div>
