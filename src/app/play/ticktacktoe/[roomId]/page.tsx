@@ -316,18 +316,20 @@ export default function Page({ params }: { params: { roomId: number } }) {
                   </div>
 
                   {/* Информация об игроках */}
-                  <div className="border-none border-gray-800/50 bg-gray-900/50 p-6">
+                  <div className="border-none bg-gray-900/50 p-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
                         <div className="relative">
-                          <div className={`rounded-full p-1 ${
+                          <div className={`rounded-full p-[2px] ${
                             playData.game_finished
                               ? playData.winner_id === player1.id
                                 ? "bg-gradient-to-r from-green-500 to-green-400"
                                 : "bg-gradient-to-r from-gray-700 to-gray-600 opacity-50"
-                              : "bg-gradient-to-r from-primary-pink to-purple-600"
+                              : "bg-gradient-to-r from-primary-pink via-purple-500 to-blue-500"
                           }`}>
-                            <Avatar src={player1.avatar_url || "/images/avatar.png"} size={50} />
+                            <div className="rounded-full p-[2px] bg-gray-900">
+                              <Avatar src={player1.avatar_url || "/images/avatar.png"} size={50} />
+                            </div>
                           </div>
                           {((playData.current_player_id === player1.id && !playData.game_finished) ||
                             (playData.game_finished && playData.winner_id === player1.id)) && (
@@ -339,13 +341,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                           )}
                         </div>
                         <div>
-                          <p className={`font-medium ${
-                            playData.game_finished
-                              ? playData.winner_id === player1.id
-                                ? "text-green-400"
-                                : "text-primary-white"
-                              : "text-primary-white"
-                          }`}>
+                          <p className="font-medium bg-gradient-to-r from-primary-pink to-purple-500 inline-block text-transparent bg-clip-text">
                             {player1.username}
                           </p>
                           <p className={`text-sm ${
@@ -366,13 +362,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
 
                       <div className="flex items-center space-x-4">
                         <div>
-                          <p className={`font-medium text-right ${
-                            playData.game_finished
-                              ? playData.winner_id === player2.id
-                                ? "text-green-400"
-                                : "text-primary-white"
-                              : "text-primary-white"
-                          }`}>
+                          <p className="font-medium bg-gradient-to-r from-purple-500 to-blue-500 inline-block text-transparent bg-clip-text text-right">
                             {player2.username}
                           </p>
                           <p className={`text-sm text-right ${
@@ -390,14 +380,16 @@ export default function Page({ params }: { params: { roomId: number } }) {
                           </p>
                         </div>
                         <div className="relative">
-                          <div className={`rounded-full p-1 ${
+                          <div className={`rounded-full p-[2px] ${
                             playData.game_finished
                               ? playData.winner_id === player2.id
                                 ? "bg-gradient-to-r from-green-500 to-green-400"
                                 : "bg-gradient-to-r from-gray-700 to-gray-600 opacity-50"
                               : "bg-gradient-to-r from-purple-600 to-blue-500"
                           }`}>
-                            <Avatar src={player2.avatar_url || "/images/avatar.png"} size={50} />
+                            <div className="rounded-full p-[2px] bg-gray-900">
+                              <Avatar src={player2.avatar_url || "/images/avatar.png"} size={50} />
+                            </div>
                           </div>
                           {((playData.current_player_id === player2.id && !playData.game_finished) ||
                             (playData.game_finished && playData.winner_id === player2.id)) && (
