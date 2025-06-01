@@ -34,7 +34,7 @@ function Home() {
       </div>
       <Header />
       <Games />
-      <QuickRoutes />
+      {/* <QuickRoutes /> */}
     </div>
   );
 }

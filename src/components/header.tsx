@@ -41,13 +41,13 @@ export default function Header() {
   }
   return (
     <header
-      className="backdrop-blur-[10px] fixed w-full top-0 z-10 p-3
+      className="backdrop-blur-[10px] bg-black fixed w-full top-0 z-10 p-3
                        flex justify-between items-center"
     >
       <Logo />
       <div className="flex gap-1 items-center">
         <ShowStat src="/images/ticket.png" value={user.money} />
-        <ShowStat src="/images/star.png" value={"0"} />
+        {/* <ShowStat src="/images/star.png" value={"0"} /> */}
         <Menu user={user}/>
       </div>
       {/* <User user={user} /> */}
