@@ -25,7 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
-        <MyAppProvider>{children}</MyAppProvider>
+        <MyAppProvider>
+          {children}
+          </MyAppProvider>
       </body>
     </html>
   );
