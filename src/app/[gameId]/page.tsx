@@ -40,7 +40,7 @@ export default function GameDetailsPage({
         }
       >
         <div className="absolute bg-primary-dark-blue z-[-1] inset-0">
-          <img className="w-full h-full " src="/images/background.png" alt="" />
+          {/* <img className="w-full h-full " src="/images/background.png" alt="" /> */}
         </div>
         <h2 className="text-xl text-purple-200 font-bold">
           Идет загрузка игры
@@ -62,7 +62,7 @@ export default function GameDetailsPage({
       className={"h-[100dvh] w-full flex justify-center mt-[80px] "}
     >
         <div className="absolute bg-primary-dark-blue z-[-1] inset-0">
-          <img className="w-full h-full " src="/images/background.png" alt="" />
+          {/* <img className="w-full h-full " src="/images/background.png" alt="" /> */}
         </div>
       <Header />
 

@@ -30,7 +30,7 @@ function Home() {
   return (
     <div className="relative">
       <div className="absolute bg-primary-dark-blue inset-0">
-        <img className="w-full h-dvh" src="/images/background.png" alt="" />
+        {/* <img className="w-full h-dvh" src="/images/background.png" alt="" /> */}
       </div>
       <Header />
       <Games />

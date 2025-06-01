@@ -51,11 +51,20 @@ function Games() {
     <div className={"h-[100%] w-full flex justify-center bg-gray-800"}>
       <div className="bg-gray-800 py-8 mt-[80px] max-w-[500px] ">
         <div className="mx-auto !py-2 !px-6 ">
-          {games.map((game) => (
-            <Link key={game.id} href={`/${game.id}`} ref={ref}>
+          {games.map((game, index) => (
+            <Link 
+              key={game.id} 
+              href={index === 0 ? `/${game.id}` : '#'} 
+              ref={ref}
+              className={index !== 0 ? 'cursor-not-allowed' : ''}
+              onClick={(e) => index !== 0 && e.preventDefault()}
+            >
               <div
-                className="group  mb-4 p-4 scale-100 rounded-lg shadow-md hover:shadow-lg
-                                 hover:scale-105 focus:scale-105 transition duration-300 border-primary-pink border-2 border-opacity-50 focus:border-opacity-95 hover:border-opacity-90"
+                className={`group mb-4 p-4 scale-100 rounded-lg shadow-md hover:shadow-lg bg-primary-pink/10 backdrop-blur-sm
+                          hover:scale-105 focus:scale-105 transition duration-300 border-primary-pink border-2 border-opacity-50 
+                          focus:border-opacity-95 hover:border-opacity-90 relative ${
+                            index !== 0 ? 'opacity-50' : ''
+                          }`}
               >
                 <Image
                   width={100}
@@ -75,6 +84,13 @@ function Games() {
                   </h3>
                   <p className="text-primary-white">{game.description}</p>
                 </div>
+                {index !== 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800/50 backdrop-blur-[2px] rounded-lg">
+                    <div className="bg-primary-pink/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-primary-pink/50">
+                      <p className="text-primary-white font-semibold">Coming Soon</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </Link>
           ))}
