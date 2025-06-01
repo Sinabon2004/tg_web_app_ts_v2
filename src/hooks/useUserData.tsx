@@ -10,8 +10,8 @@ const useUserData = (userId: number | undefined) => {
 
 
     const url = useMemo(() => {
-        // return userId ? `${process.env.NEXT_PUBLIC_API_URL}/user/${userId}` : null;
-        return userId ? `${process.env.NEXT_PUBLIC_API_URL}/user/${895701241}` : null;
+        return userId ? `${process.env.NEXT_PUBLIC_API_URL}/user/${userId}` : null;
+        // return userId ? `${process.env.NEXT_PUBLIC_API_URL}/user/${895701241}` : null;
     }, [userId]);
 
     useEffect(() => {

@@ -191,6 +191,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
       : (winAnimation = "opacity-100 flex");
   }
 
+
   if (!playData?.connected_players) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-primary-dark-blue">
@@ -237,7 +238,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                             <span className="text-primary-white">{playerData?.username}</span>
                           </div>
                           <span className={clsx(
-                            "px-3 py-1 rounded-full text-sm font-medium transition-colors duration-300",
+                            "px-3 py-1 rounded-md bg-primary-pink text-sm font-medium transition-colors duration-300",
                             playerData?.is_ready 
                               ? "bg-green-500/20 text-green-400"
                               : "bg-yellow-500/20 text-yellow-400"
@@ -372,7 +373,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                   </div>
                   <div>
                     <p className="font-medium text-primary-white">{player1.username}</p>
-                    <p className="text-sm text-gray-400">Игрок 1 (X)</p>
+                    {/* <p className="text-sm text-gray-400">Игрок 1 (X)</p> */}
                   </div>
                 </div>
 
@@ -384,7 +385,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                 <div className="flex items-center space-x-4">
                   <div>
                     <p className="font-medium text-primary-white text-right">{player2.username}</p>
-                    <p className="text-sm text-gray-400 text-right">Игрок 2 (O)</p>
+                    {/* <p className="text-sm text-gray-400 text-right">Игрок 2 (O)</p> */}
                   </div>
                   <div className="relative">
                     <Avatar 
