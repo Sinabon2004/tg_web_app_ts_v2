@@ -328,7 +328,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                               : "bg-gradient-to-r from-primary-pink via-purple-500 to-blue-500"
                           }`}>
                             <div className="rounded-full p-[2px] bg-gray-900">
-                              <Avatar src={player1.avatar_url || "/images/avatar.png"} size={50} />
+                              <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${player1.avatar_url}`|| "/images/avatar.png"} size={50} />
                             </div>
                           </div>
                           {((playData.current_player_id === player1.id && !playData.game_finished) ||
@@ -388,7 +388,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                               : "bg-gradient-to-r from-purple-600 to-blue-500"
                           }`}>
                             <div className="rounded-full p-[2px] bg-gray-900">
-                              <Avatar src={player2.avatar_url || "/images/avatar.png"} size={50} />
+                              <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${player2.avatar_url}` || "/images/avatar.png"} size={50} />
                             </div>
                           </div>
                           {((playData.current_player_id === player2.id && !playData.game_finished) ||
@@ -446,7 +446,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                                   <div className="flex items-center space-x-3">
                                     <div className="rounded-full p-[2px] bg-gradient-to-r from-primary-pink via-purple-500 to-blue-500">
                                       <div className="rounded-full p-[2px] bg-gray-900">
-                                        <Avatar src={playerData.avatar_url || "/images/avatar.png"} size={40} />
+                                        <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${playerData.avatar_url}` || "/images/avatar.png"} size={40} />
                                       </div>
                                     </div>
                                     <div>
