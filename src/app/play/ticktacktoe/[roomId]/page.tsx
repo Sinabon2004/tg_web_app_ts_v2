@@ -429,7 +429,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                       <div className="mt-4 space-y-3">
                         {playData?.connected_players &&
                           Object.entries(playData.connected_players as Record<string, any>).map(
-                            ([playerId, playerData], index) => (
+                            ([playerId, playerData], index, array) => (
                               <div key={playerId}>
                                 <div className="flex items-center justify-between p-3 bg-gray-900/50 rounded-lg border border-transparent bg-gradient-to-r from-transparent via-primary-pink/20 to-transparent hover:from-primary-pink/20 hover:via-purple-500/20 hover:to-blue-500/20 transition-all duration-300">
                                   <div className="flex items-center space-x-3">
@@ -452,7 +452,7 @@ export default function Page({ params }: { params: { roomId: number } }) {
                                     </div>
                                   </div>
                                 </div>
-                                {index < Object.entries(playData.connected_players).length - 1 && (
+                                {index < array.length - 1 && (
                                   <div className="h-[2px] mx-4 my-3 bg-gradient-to-r from-transparent via-primary-pink/30 to-transparent" />
                                 )}
                               </div>
