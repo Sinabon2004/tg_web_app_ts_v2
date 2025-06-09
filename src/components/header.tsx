@@ -29,6 +29,7 @@ export default function Header() {
     const initData = retrieveLaunchParams();
     if (initData) {
       setTgData(initData);
+      console.log(initData?.initDataRaw)
     }
   }, []);
   const userData: any = useUserData(TgData?.initData?.user?.id);
